@@ -1,0 +1,59 @@
+' filepath: c:\Users\Soham\OneDrive\Desktop\8th RnD App Development\main.py
+@startuml
+start
+
+:App Starts;
+if (Is First Time User?) then (yes)
+  :Show Password Setup Screen;
+  :Set Password;
+  :Show Start Screen;
+else (no)
+  :Show Start Screen;
+endif
+
+:User Chooses Option;
+partition "Start Screen" {
+  if (Start Work Session) then (yes)
+    :Get Work/Break Duration;
+    :Start Work Phase;
+    :Countdown Work Duration;
+    :Start Warning Phase;
+    :Countdown Warning;
+    :Start Break Phase;
+    :Play Music;
+    :Rotate Exercises;
+    :Countdown Break Duration;
+    :End Break Phase;
+    :Stop Music;
+    :Back to Work Phase;
+  else (no)
+    if (Change Password) then (yes)
+      :Show Change Password Screen;
+      :Verify Old Password;
+      :Set New Password;
+      :Show Start Screen;
+    else (no)
+      if (Exit) then (yes)
+        :Exit App;
+        stop
+      endif
+    endif
+  endif
+}
+
+partition "Break Phase" {
+  :User Can Abort (ABORT Button);
+  if (User Clicks ABORT) then (yes)
+    :Show Password Window;
+    if (Password Correct?) then (yes)
+      :Stop Music;
+      :Exit App;
+      stop
+    else (no)
+      :Show Error;
+      :Return to Break Phase;
+    endif
+  endif
+}
+
+@enduml
